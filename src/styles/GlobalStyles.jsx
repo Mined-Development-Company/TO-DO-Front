@@ -2,29 +2,23 @@ import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyles = createGlobalStyle`
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+  border: 1px solid red;
 }
 body {
-  margin: 0px;
   color:#fff;
   background-color: #000814;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 a {
   text-decoration: none;
   color:inherit;
 }
-h1,
-h2,
-h3,
-p {
-  margin: 0px;
-}
 ul,
 li {
   list-style: none;
-  padding: 0px;
-  margin: 0px;
 }
 img {
   display: block;

@@ -4,7 +4,10 @@ const theme = {
 	colors: {
 		Primary: '#194FD9',
 		White: '#ffffff',
-		Bg: '#181820'
+		Bg: '#181820',
+		Cinza: '#B8B8B8',
+		AzulEscuro: '#181820',
+		CinzaEscuro: '#21212B'
 	},
 	container: {
 		maxWidth: '1400px',
