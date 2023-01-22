@@ -3,10 +3,13 @@ import styled from 'styled-components'
 import { LoginForm } from '../components/LoginForm'
 
 const StyledMain = styled.main`
-	background-color: ${({ theme }) => theme.colors.White};
-	background-image: url(/Gradient.svg);
-	background-size: 100%;
-	background-position: center;
+	background-color: ${({ theme }) => theme.colors.AzulEscuro};
+	background-image: url(/Gradient.svg), url(/Gradient2.svg);
+	background-size: 20%;
+
+	background-position: left -70px bottom -130px, top right;
+	/* background-position-y: bottom 0px; */
+	background-repeat: no-repeat;
 
 	width: 100%;
 	max-width: 1444px;
