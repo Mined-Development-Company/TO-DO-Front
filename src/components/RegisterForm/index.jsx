@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom';
 
 const BoxLogin = styled.div`
 	width: 100%;
 	max-width: 600px;
-	height: 500px;
+	height: auto;
+    padding-bottom: 73px;
 
 	background-color: ${({ theme }) => theme.colors.CinzaEscuro};
 
@@ -58,10 +59,10 @@ const BoxLogin = styled.div`
 		outline: none;
 	}
 	h1 {
-		margin: 18px;
+		margin: 18px 0 18px 18px;
 		color: ${({ theme }) => theme.colors.CinzaText};
 		font-size: 14px;
-		text-align: center;
+		text-align: right;
 	}
 	a {
 		color: ${({ theme }) => theme.colors.Primary};
@@ -80,15 +81,16 @@ const ButtonSubmit = styled.button`
 	border-radius: 10px;
 	cursor: pointer;
 `
-export const LoginForm = () => {
+export const RegisterForm = () => {
 	const [form, setForm] = useState({
+        name: '',
 		email: '',
 		password: ''
 	});
 
 	const navigate = useNavigate();
 
-	function submitLogin(e) {
+	function submitRegister(e) {
 		e.preventDefault();
 		console.log(form);
 	}
@@ -97,14 +99,16 @@ export const LoginForm = () => {
 		<>
 			<BoxLogin>
 				<img src='/Logo.svg' alt='Logo ToDO' />
-				<form onSubmit={submitLogin}>
+				<form onSubmit={submitRegister}>
+                    <label htmlFor='name'>Nome</label>
+					<input value={form.name} onChange={e => setForm(prevState => ({ ...prevState, name: e.target.value }))} id='name' type='text' placeholder='Nome' required />
 					<label htmlFor='email'>Email</label>
 					<input value={form.email} onChange={e => setForm(prevState => ({ ...prevState, email: e.target.value }))} id='email' type='email' placeholder='Email' required />
 					<label htmlFor='password'>Senha</label>
 					<input value={form.password} onChange={e => setForm(prevState => ({ ...prevState, password: e.target.value }))} id='password' type='password' placeholder='Senha' required />
 
 					<h1>
-						Não esta cadastrado? <a onClick={() => navigate('/register')} >Registre-se</a>
+						Já tem uma conta? <a onClick={() => navigate('/')} >Entre</a>
 					</h1>
 
 					<ButtonSubmit type='submit'>SUBMIT</ButtonSubmit>
