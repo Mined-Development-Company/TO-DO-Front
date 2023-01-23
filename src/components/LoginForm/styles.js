@@ -74,20 +74,9 @@ export const ButtonSubmit = styled.button`
 	font-family: 'Poppins', sans-serif;
 	font-weight: bold;
 	font-size: 17px;
-	padding: 18px;
+	padding: 0 18px;
+	height: 70px;
 	border: none;
 	border-radius: 10px;
 	cursor: pointer;
-`
-
-export const MessageErrorBox = styled.div`
-	width: 100%;
-	height: 50px;
-	padding: 20px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: orange;
-	border-radius: 10px;
-	margin-bottom: 14px;
 `
