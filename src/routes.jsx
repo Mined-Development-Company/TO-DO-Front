@@ -1,13 +1,28 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
+import { DashboardPage } from './pages/DashboardPage';
 
 export const Routers = () => {
+    const isLogged = false;
+
     return (
         <>
             <Routes>
-                <Route element={<LoginPage />} path="/" />
-                <Route element={<RegisterPage />} path="/register" />
+                {
+                    !isLogged ? (
+                        <>
+                            <Route element={<LoginPage />} path="/" />
+                            <Route element={<RegisterPage />} path="/register" />
+                            <Route element={<Navigate to="/" replace />} path="*" />
+                        </>
+                    ) : (
+                        <>
+                            <Route element={<DashboardPage />} path="/dashboard" />
+                            <Route element={<Navigate to="/dashboard" replace />} path="*" />
+                        </>
+                    )
+                }
             </Routes>
         </>
     )
