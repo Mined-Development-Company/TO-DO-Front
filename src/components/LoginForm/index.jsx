@@ -2,35 +2,45 @@ import React, { useState } from 'react'
 import API from '../../util/api'
 import * as Styled from './styles'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { PuffLoader } from 'react-spinners'
 
 export const LoginForm = () => {
 	const [form, setForm] = useState({
 		email: '',
 		password: ''
 	})
-
-	const [isLogged, setIsLogged] = useState(false)
-	const [error, setError] = useState('')
-	const [showError, setShowError] = useState(false)
+	
+	const [isLoading, setIsLoading] = useState(false)
 
 	async function submitLogin(e) {
 		e.preventDefault()
+		setIsLoading(true)
 
 		try {
-			const data = await API.post('/login', {
-				...form
-			})
+			const data = await toast.promise(
+				API.post('/login', {
+					...form
+				}),
+				{
+					pending: 'Aguarde',
+					success: 'Logado com sucesso!',
+					error: {
+						render({data}) {
+							setIsLoading(false)
+							const { message } = data.response.data;
+							return  message ? message : 'Algo deu errado, por favor tente novamente.';
+						}
+					}
+				}
+			)
+			
+		} catch {
 
-			console.log(data)
-			setIsLogged(true)
-		} catch (e) {
-			console.log(e)
-			const { message } = e.response.data
-			console.log('message', message)
-			setError(message)
-			setShowError(true)
-			setIsLogged(false)
 		}
+
+
+		setIsLoading(false)
 	}
 
 	return (
@@ -61,11 +71,9 @@ export const LoginForm = () => {
 						Não esta cadastrado? <Link to='/register'>Registre-se</Link>
 					</h1>
 
-					{showError ? <Styled.MessageErrorBox>{error}</Styled.MessageErrorBox> : null}
-
-					{isLogged && <p>Logado com sucesso</p>}
-
-					<Styled.ButtonSubmit type='submit'>SUBMIT</Styled.ButtonSubmit>
+					<Styled.ButtonSubmit type='submit' disabled={isLoading}>
+						{ isLoading ? <PuffLoader color='#FFF' size={30} /> : 'ENTRAR'}
+					</Styled.ButtonSubmit>
 				</form>
 			</Styled.BoxLogin>
 		</>

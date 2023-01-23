@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import API from '../../util/api'
 import * as Styled from './styles'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { PuffLoader } from 'react-spinners'
 
 export const RegisterForm = () => {
 	const [form, setForm] = useState({
@@ -9,29 +11,38 @@ export const RegisterForm = () => {
 		email: '',
 		password: ''
 	})
-	const [error, setError] = useState('')
-	const [showError, setShowError] = useState(false)
-	const [isLogged, setIsLogged] = useState(false)
+	
+	const [isLoading, setIsLoading] = useState(false)
+
+	const navigate = useNavigate()
 
 	async function submitRegister(e) {
 		e.preventDefault()
+		setIsLoading(true)
 
 		try {
-			const data = await API.post('/register', {
-				...form
-			})
+			const data = await toast.promise(
+				API.post('/register', {
+					...form
+				}),
+				{
+					pending: 'Aguarde',
+					success: 'Registrado com sucesso! Por favor faça o login.',
+					error: {
+						render({data}) {
+							setIsLoading(false)
+							const { message } = data.response.data;
+							return  message ? message : 'Algo deu errado, por favor tente novamente.';
+						}
+					}
+				}
+			).then(() => navigate('/'))
 
-			console.log(data)
+		} catch {
 
-			setIsLogged(true)
-		} catch (e) {
-			console.log(e)
-			const { message } = e.response.data
-			console.log('message', message)
-			setError(message)
-			setShowError(true)
-			setIsLogged(false)
 		}
+
+		setIsLoading(false)
 	}
 
 	return (
@@ -71,15 +82,9 @@ export const RegisterForm = () => {
 						Já tem uma conta? <Link to='/'>Entre</Link>
 					</h1>
 
-					{showError && <Styled.MessageErrorBox>{error}</Styled.MessageErrorBox>}
-
-					{isLogged ? (
-						<Styled.MessageBox>
-							Conta criada com sucesso, já é possivel <Link to='/'>entrar</Link>
-						</Styled.MessageBox>
-					) : (
-						<Styled.ButtonSubmit type='submit'>SUBMIT</Styled.ButtonSubmit>
-					)}
+					<Styled.ButtonSubmit type='submit' disabled={isLoading}>
+						{ isLoading ? <PuffLoader color='#FFF' size={30} /> : 'REGISTRAR'}
+					</Styled.ButtonSubmit>
 				</form>
 			</Styled.BoxLogin>
 		</>
