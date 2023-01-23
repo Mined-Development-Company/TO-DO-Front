@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom';
+import API from '../../util/api';
 
 const BoxLogin = styled.div`
 	width: 100%;
@@ -81,18 +82,60 @@ const ButtonSubmit = styled.button`
 	border-radius: 10px;
 	cursor: pointer;
 `
+
+const MessageBox = styled.div`
+    width: 100%;
+    height: 50px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: green;
+    border-radius: 10px;
+    margin-bottom: 14px;
+`;
+
+const MessageErrorBox = styled.div`
+    width: 100%;
+    height: 50px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: orange;
+    border-radius: 10px;
+    margin-bottom: 14px;
+`;
+
 export const RegisterForm = () => {
 	const [form, setForm] = useState({
         name: '',
 		email: '',
 		password: ''
 	});
+    const [error, setError] = useState('');
+    const [isLogged, setIsLogged] = useState(false);
 
 	const navigate = useNavigate();
 
-	function submitRegister(e) {
+	async function submitRegister(e) {
 		e.preventDefault();
-		console.log(form);
+        setError('');
+        try {
+            const data = await API.post('/register', {
+                ...form
+            })
+
+            console.log(data)
+
+            setIsLogged(true);
+
+        }
+        catch(e) {
+            console.log('error', e);
+            setError('Algo deu errado, por favor tente novamente.')
+        }
+
 	}
 
 	return (
@@ -111,7 +154,14 @@ export const RegisterForm = () => {
 						Já tem uma conta? <a onClick={() => navigate('/')} >Entre</a>
 					</h1>
 
-					<ButtonSubmit type='submit'>SUBMIT</ButtonSubmit>
+                    {
+                        error.length > 0 && <MessageErrorBox>{error}</MessageErrorBox>
+                    }
+
+                    {
+                        isLogged ? <MessageBox>Conta criada com sucesso, já é possivel <a onClick={() => navigate('/')}>entrar</a></MessageBox> : <ButtonSubmit type='submit'>SUBMIT</ButtonSubmit>
+                    }
+					
 				</form>
 			</BoxLogin>
 		</>
