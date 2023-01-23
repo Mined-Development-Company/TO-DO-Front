@@ -1,5 +1,34 @@
 import React from 'react'
+import styled from 'styled-components'
+import { LoginForm } from '../components/LoginForm'
+
+const StyledMain = styled.main`
+	background-color: ${({ theme }) => theme.colors.AzulEscuro};
+	background-image: url(/Gradient.svg), url(/Gradient2.svg);
+	background-size: 20%;
+
+	background-position: left -70px bottom -130px, top right;
+	background-repeat: no-repeat;
+
+	width: 100%;
+	min-height: 100vh;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	margin: 0 auto;
+	padding: 0 10px;
+
+	@media (min-width: 640px) {
+		padding: 0;
+	}
+`
 
 export const LoginPage = () => {
-	return <div>LoginPage</div>
+	return (
+		<StyledMain>
+			<LoginForm />
+		</StyledMain>
+	)
 }
