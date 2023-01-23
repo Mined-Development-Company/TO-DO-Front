@@ -114,13 +114,14 @@ export const RegisterForm = () => {
 		password: ''
 	});
     const [error, setError] = useState('');
+    const [showError, setShowError] = useState(false);
     const [isLogged, setIsLogged] = useState(false);
 
 	const navigate = useNavigate();
 
 	async function submitRegister(e) {
 		e.preventDefault();
-        setError('');
+
         try {
             const data = await API.post('/register', {
                 ...form
@@ -132,8 +133,12 @@ export const RegisterForm = () => {
 
         }
         catch(e) {
-            console.log('error', e);
-            setError('Algo deu errado, por favor tente novamente.')
+            console.log(e);
+			const {message} = e.response.data;
+			console.log('message', message)
+			setError(message);
+			setShowError(true);
+			setIsLogged(false);
         }
 
 	}
@@ -155,7 +160,7 @@ export const RegisterForm = () => {
 					</h1>
 
                     {
-                        error.length > 0 && <MessageErrorBox>{error}</MessageErrorBox>
+                        showError && <MessageErrorBox>{error}</MessageErrorBox>
                     }
 
                     {
