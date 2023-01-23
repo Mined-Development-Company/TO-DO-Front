@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom';
+import API from '../../util/api';
 
 const BoxLogin = styled.div`
 	width: 100%;
 	max-width: 600px;
-	height: 500px;
+	height: auto;
+	padding-bottom: 73px;
 
 	background-color: ${({ theme }) => theme.colors.CinzaEscuro};
 
@@ -80,17 +82,49 @@ const ButtonSubmit = styled.button`
 	border-radius: 10px;
 	cursor: pointer;
 `
+
+const MessageErrorBox = styled.div`
+    width: 100%;
+    height: 50px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: orange;
+    border-radius: 10px;
+    margin-bottom: 14px;
+`;
 export const LoginForm = () => {
 	const [form, setForm] = useState({
 		email: '',
 		password: ''
 	});
 
+	const [isLogged, setIsLogged] = useState(false);
+	const [error, setError] = useState('');
+	const [showError, setShowError] = useState(false);
+
 	const navigate = useNavigate();
 
-	function submitLogin(e) {
+	async function submitLogin(e) {
 		e.preventDefault();
-		console.log(form);
+
+		try {
+			const data = await API.post('/login', {
+				...form
+			})
+
+			console.log(data);
+			setIsLogged(true)
+
+		} catch(e) {
+			console.log(e);
+			const {message} = e.response.data;
+			console.log('message', message)
+			setError(message);
+			setShowError(true);
+			setIsLogged(false);
+		}
 	}
 
 	return (
@@ -101,11 +135,19 @@ export const LoginForm = () => {
 					<label htmlFor='email'>Email</label>
 					<input value={form.email} onChange={e => setForm(prevState => ({ ...prevState, email: e.target.value }))} id='email' type='email' placeholder='Email' required />
 					<label htmlFor='password'>Senha</label>
-					<input value={form.password} onChange={e => setForm(prevState => ({ ...prevState, password: e.target.value }))} id='password' type='password' placeholder='Senha' required />
+					<input value={form.password} onChange={e => setForm(prevState => ({ ...prevState, password: e.target.value.toString() }))} id='password' type='password' placeholder='Senha' required />
 
 					<h1>
 						Não esta cadastrado? <a onClick={() => navigate('/register')} >Registre-se</a>
 					</h1>
+
+					{
+						showError ? <MessageErrorBox>{error}</MessageErrorBox> : null
+					}
+
+					{
+						isLogged && <p>Logado com sucesso</p>
+					}
 
 					<ButtonSubmit type='submit'>SUBMIT</ButtonSubmit>
 				</form>
