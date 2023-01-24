@@ -4,13 +4,14 @@ import * as Styled from './styles'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { PuffLoader } from 'react-spinners'
+import { PasswordInput } from '../Form/PasswordInput'
 
 export const LoginForm = () => {
 	const [form, setForm] = useState({
 		email: '',
 		password: ''
 	})
-	
+
 	const [isLoading, setIsLoading] = useState(false)
 
 	async function submitLogin(e) {
@@ -26,19 +27,15 @@ export const LoginForm = () => {
 					pending: 'Aguarde',
 					success: 'Logado com sucesso!',
 					error: {
-						render({data}) {
+						render({ data }) {
 							setIsLoading(false)
-							const { message } = data.response.data;
-							return  message ? message : 'Algo deu errado, por favor tente novamente.';
+							const { message } = data.response.data
+							return message ? message : 'Algo deu errado, por favor tente novamente.'
 						}
 					}
 				}
 			)
-			
-		} catch {
-
-		}
-
+		} catch {}
 
 		setIsLoading(false)
 	}
@@ -58,11 +55,10 @@ export const LoginForm = () => {
 						required
 					/>
 					<label htmlFor='password'>Senha</label>
-					<input
+					<PasswordInput
 						value={form.password}
 						onChange={(e) => setForm((prevState) => ({ ...prevState, password: e.target.value.toString() }))}
 						id='password'
-						type='password'
 						placeholder='Senha'
 						required
 					/>
@@ -72,7 +68,7 @@ export const LoginForm = () => {
 					</h1>
 
 					<Styled.ButtonSubmit type='submit' disabled={isLoading}>
-						{ isLoading ? <PuffLoader color='#FFF' size={30} /> : 'ENTRAR'}
+						{isLoading ? <PuffLoader color='#FFF' size={30} /> : 'ENTRAR'}
 					</Styled.ButtonSubmit>
 				</form>
 			</Styled.BoxLogin>
