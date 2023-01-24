@@ -36,6 +36,7 @@ export const RegisterForm = () => {
 							return  message ? message : 'Algo deu errado, por favor tente novamente.';
 						}
 					}
+				}
 				)
 				.then(() => navigate('/'))
 		} catch {}
