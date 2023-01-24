@@ -8,7 +8,7 @@ export const AuthProvider = (props) => {
 	const queryClient = useQueryClient()
 
 	const { mutateAsync: signIn } = useMutation((user) => API.post('/login', user), {
-		onSuccess: (data) => {
+		onSuccess: ({data}) => {
 			if (data.token) {
 				localStorage.setItem('token', data.token)
 			}
@@ -16,7 +16,7 @@ export const AuthProvider = (props) => {
 			queryClient.invalidateQueries('user')
 		},
 		onError: (error) => {
-			console.log(error)
+			// console.log(error)
 		}
 	})
 
@@ -27,7 +27,7 @@ export const AuthProvider = (props) => {
 			queryClient.invalidateQueries('user')
 		},
 		onError: (error) => {
-			console.log(error)
+			// console.log(error)
 		}
 	})
 
