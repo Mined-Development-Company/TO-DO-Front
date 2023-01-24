@@ -36,5 +36,10 @@ export const AuthProvider = (props) => {
 		}
 	})
 
-	return <AuthContext.Provider value={{ signIn, signUp, isLogged }}>{props.children}</AuthContext.Provider>
+	const logout = () => {
+		localStorage.removeItem('token');
+		setIsLogged(false);
+	}
+
+	return <AuthContext.Provider value={{ signIn, signUp, isLogged, logout }}>{props.children}</AuthContext.Provider>
 }

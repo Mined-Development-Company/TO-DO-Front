@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+import { toast } from 'react-toastify'
 
+import { AuthContext } from '../../context/AuthContext'
 import { SwitchDarkMode } from '../../components/SwitchDarkMode';
 import { Task } from '../../components/Task';
 
@@ -10,6 +12,12 @@ import {
 } from './styles'
 
 export const DashboardPage = () => {
+    const { logout } = useContext(AuthContext);
+
+    const HandleLogout = () => {
+        logout();
+        toast.success('Até mais tarde!')
+    }
 
     return (
         <>
@@ -20,7 +28,7 @@ export const DashboardPage = () => {
                     <HeaderButtons>
                         <SwitchDarkMode />
                         
-                        <img src="/Logout.svg" alt="Deslogar" />
+                        <img onClick={HandleLogout} src="/Logout.svg" alt="Deslogar" />
                     </HeaderButtons>
                 </Header>
                 
