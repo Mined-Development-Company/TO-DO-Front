@@ -8,6 +8,7 @@ export const ContainerTask = styled.div`
     background-color: #21212B;
     border-radius: 20px;
     width: 100%;
+    height: 100%;
 `;
 
 export const CheckBoxWithTitle = styled.div`
@@ -31,6 +32,7 @@ export const CheckBox = styled.input.attrs({
     /* border: 2.5px solid #972626; */
     border-radius: 6.5px;
     width: 17px;
+    min-width: 17px;
     height: 17px;
 
     &:checked {
@@ -44,6 +46,8 @@ export const Title = styled.p`
     font-weight: 700;
     font-size: 14px;
     line-height: 30px;
+    height: auto;
+    word-break: break-all;
 `;
 
 export const TrashButton = styled.div`
@@ -53,6 +57,7 @@ export const TrashButton = styled.div`
     cursor: pointer;
 
     width: 25px;
+    min-width: 25px;
     height: 25px;
 `;
 
