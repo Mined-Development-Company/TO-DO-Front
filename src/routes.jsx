@@ -1,10 +1,12 @@
+import React, { useContext } from 'react'
+import { AuthContext } from './context/AuthContext'
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { DashboardPage } from './pages/DashboardPage';
 
 export const Routers = () => {
-    const isLogged = true;
+    const { isLogged } = useContext(AuthContext);
 
     return (
         <>
