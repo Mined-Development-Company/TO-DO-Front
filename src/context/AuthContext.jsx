@@ -1,16 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import API from '../util/api'
 import { useMutation, useQueryClient } from 'react-query'
 
 export const AuthContext = React.createContext()
 
 export const AuthProvider = (props) => {
+	const userToken = localStorage.getItem('token');
+
+	const [isLogged, setIsLogged] = useState(userToken ? true : false);
+
 	const queryClient = useQueryClient()
 
 	const { mutateAsync: signIn } = useMutation((user) => API.post('/login', user), {
 		onSuccess: ({data}) => {
 			if (data.token) {
 				localStorage.setItem('token', data.token)
+				setIsLogged(true)
 			}
 
 			queryClient.invalidateQueries('user')
@@ -31,5 +36,5 @@ export const AuthProvider = (props) => {
 		}
 	})
 
-	return <AuthContext.Provider value={{ signIn, signUp }}>{props.children}</AuthContext.Provider>
+	return <AuthContext.Provider value={{ signIn, signUp, isLogged }}>{props.children}</AuthContext.Provider>
 }
