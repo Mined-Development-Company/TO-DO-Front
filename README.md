@@ -10,3 +10,14 @@ O projeto "ToDo" é um aplicativo desenvolvido por um pequeno grupo de desenvolv
 - Deletar tarefas não desejadas
 - Armazenamento de tarefas em um banco de dados
 - Design intuitivo e fácil de usar
+
+## Demonstração
+
+- [Deploy do site](https://mdc-to-do.netlify.app/)
+
+## Screenshots
+
+<br>
+<p align="center">
+  <img alt="Print" src="/img.png" width="100%">
+</p>
