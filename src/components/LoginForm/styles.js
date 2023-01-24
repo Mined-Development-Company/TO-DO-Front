@@ -79,4 +79,8 @@ export const ButtonSubmit = styled.button`
 	border: none;
 	border-radius: 10px;
 	cursor: pointer;
+
+	&:hover {
+		background-color: #08246c;
+	}
 `

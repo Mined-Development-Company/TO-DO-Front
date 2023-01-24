@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { PuffLoader } from 'react-spinners'
 import { AuthContext } from '../../context/AuthContext'
+import { PasswordInput } from '../Form/PasswordInput'
 
 export const RegisterForm = () => {
 	const { signUp } = useContext(AuthContext);
@@ -13,7 +14,7 @@ export const RegisterForm = () => {
 		email: '',
 		password: ''
 	})
-	
+
 	const [isLoading, setIsLoading] = useState(false)
 
 	const navigate = useNavigate()
@@ -35,12 +36,9 @@ export const RegisterForm = () => {
 							return  message ? message : 'Algo deu errado, por favor tente novamente.';
 						}
 					}
-				}
-			).then(() => navigate('/'))
-
-		} catch {
-
-		}
+				)
+				.then(() => navigate('/'))
+		} catch {}
 
 		setIsLoading(false)
 	}
@@ -69,11 +67,10 @@ export const RegisterForm = () => {
 						required
 					/>
 					<label htmlFor='password'>Senha</label>
-					<input
+					<PasswordInput
 						value={form.password}
 						onChange={(e) => setForm((prevState) => ({ ...prevState, password: e.target.value }))}
 						id='password'
-						type='password'
 						placeholder='Senha'
 						required
 					/>
@@ -83,7 +80,7 @@ export const RegisterForm = () => {
 					</h1>
 
 					<Styled.ButtonSubmit type='submit' disabled={isLoading}>
-						{ isLoading ? <PuffLoader color='#FFF' size={30} /> : 'REGISTRAR'}
+						{isLoading ? <PuffLoader color='#FFF' size={30} /> : 'REGISTRAR'}
 					</Styled.ButtonSubmit>
 				</form>
 			</Styled.BoxLogin>
