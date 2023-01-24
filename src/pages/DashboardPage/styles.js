@@ -20,3 +20,12 @@ export const HeaderButtons = styled.div`
         cursor: pointer;
     }
 `;
+
+export const ContainerTasks = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+    padding: 0 20%;
+`;
