@@ -4,7 +4,7 @@ import { RegisterPage } from './pages/RegisterPage';
 import { DashboardPage } from './pages/DashboardPage';
 
 export const Routers = () => {
-    const isLogged = false;
+    const isLogged = true;
 
     return (
         <>
