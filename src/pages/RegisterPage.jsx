@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { RegisterForm } from '../components/RegisterForm'
+import { Head } from '../util/Head'
 
 const StyledMain = styled.main`
 	background-color: ${({ theme }) => theme.colors.AzulEscuro};
@@ -28,6 +29,7 @@ const StyledMain = styled.main`
 export const RegisterPage = () => {
 	return (
 		<StyledMain>
+			<Head title='Registrar' />
 			<RegisterForm />
 		</StyledMain>
 	)
