@@ -5,9 +5,9 @@ export const SwitchDarkMode = () => {
 
     return (
         <ContainerSwitch>
-            <label class="switch">
+            <label className="switch">
                 <input type="checkbox" />
-                <span class="slider"></span>
+                <span className="slider"></span>
             </label>
         </ContainerSwitch>
     )

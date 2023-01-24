@@ -10,20 +10,20 @@ import {
     TrashButton
 } from './style'
 
-export const Task = ({importance = 0}) => {
+export const Task = (props) => {
     const lottierRef = useRef();
     
 
     return (
         <ContainerTask>
             <CheckBoxWithTitle>
-                <CheckBox importance={importance} />
+                <CheckBox importance={props.importance} />
                 <Title>
-                    Minha task
+                    {props.title}
                 </Title>
             </CheckBoxWithTitle>
 
-            <TrashButton onMouseEnter={() => lottierRef.current.play()} onMouseLeave={() => lottierRef.current.stop()}>
+            <TrashButton onClick={props.delete} onMouseEnter={() => lottierRef.current.play()} onMouseLeave={() => lottierRef.current.stop()}>
                 <Lottie lottieRef={lottierRef} autoplay={false} loop={false} animationData={TrashAnimated} />
             </TrashButton>
         </ContainerTask>

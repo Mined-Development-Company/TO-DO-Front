@@ -7,6 +7,7 @@ export const ContainerTask = styled.div`
     padding: 20px;
     background-color: #21212B;
     border-radius: 20px;
+    width: 100%;
 `;
 
 export const CheckBoxWithTitle = styled.div`
