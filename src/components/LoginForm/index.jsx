@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import API from '../../util/api'
 import * as Styled from './styles'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { PuffLoader } from 'react-spinners'
+import { AuthContext } from '../../context/AuthContext'
 import { PasswordInput } from '../Form/PasswordInput'
 
 export const LoginForm = () => {
+	const { signIn } = useContext(AuthContext);
 	const [form, setForm] = useState({
 		email: '',
 		password: ''
@@ -20,9 +22,7 @@ export const LoginForm = () => {
 
 		try {
 			const data = await toast.promise(
-				API.post('/login', {
-					...form
-				}),
+				signIn(form),
 				{
 					pending: 'Aguarde',
 					success: 'Logado com sucesso!',
