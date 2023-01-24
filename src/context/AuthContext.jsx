@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import API from '../util/api'
 import { useMutation, useQueryClient } from 'react-query'
 
@@ -6,8 +6,14 @@ export const AuthContext = React.createContext()
 
 export const AuthProvider = (props) => {
 	const userToken = localStorage.getItem('token');
+	const darkMode = localStorage.getItem('darkmode');
 
 	const [isLogged, setIsLogged] = useState(userToken ? true : false);
+	const [isDarkMode, setIsDarkMode] = useState(darkMode ? JSON.parse(darkMode) : false);
+
+	useEffect(() => {
+		localStorage.setItem('darkmode', JSON.stringify(isDarkMode));
+	},[isDarkMode])
 
 	const queryClient = useQueryClient()
 
@@ -41,5 +47,5 @@ export const AuthProvider = (props) => {
 		setIsLogged(false);
 	}
 
-	return <AuthContext.Provider value={{ signIn, signUp, isLogged, logout }}>{props.children}</AuthContext.Provider>
+	return <AuthContext.Provider value={{ signIn, signUp, isLogged, logout, isDarkMode, setIsDarkMode }}>{props.children}</AuthContext.Provider>
 }

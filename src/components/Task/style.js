@@ -5,7 +5,7 @@ export const ContainerTask = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 20px;
-    background-color: #21212B;
+    background-color: ${({ theme }) => theme.colors.CinzaEscuro};
     border-radius: 20px;
     width: 100%;
     height: 100%;
@@ -34,6 +34,7 @@ export const CheckBox = styled.input.attrs({
     width: 17px;
     min-width: 17px;
     height: 17px;
+    cursor: pointer;
 
     &:checked {
         background-color: #00600A;
@@ -48,6 +49,8 @@ export const Title = styled.p`
     line-height: 30px;
     height: auto;
     word-break: break-all;
+    text-align: left;
+    color: ${({ theme }) => theme.colors.CinzaText};;
 `;
 
 export const TrashButton = styled.div`

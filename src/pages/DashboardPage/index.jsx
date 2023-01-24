@@ -9,11 +9,14 @@ import {
     Container, 
     Header,
     HeaderButtons,
-    ContainerTasks,
+    ContainerContent,
+    ContainerCenter,
+    Title,
+    AddTask,
 } from './styles'
 
 export const DashboardPage = () => {
-    const { logout } = useContext(AuthContext);
+    const { logout, isDarkMode } = useContext(AuthContext);
 
     const [tasks, setTasks] = useState([
         {
@@ -56,7 +59,8 @@ export const DashboardPage = () => {
         <>
             <Container>
                 <Header>
-                    <img src='/Logo.svg' alt='Logo ToDO' />
+                    {isDarkMode ? <img src='/Logo.svg' alt='Logo ToDO' /> : <img src='/LogoWhite.svg' alt='Logo ToDO' />}
+                    
 
                     <HeaderButtons>
                         <SwitchDarkMode />
@@ -65,18 +69,27 @@ export const DashboardPage = () => {
                     </HeaderButtons>
                 </Header>
 
-                <input type="text" placeholder='Nova task' onKeyDown={HandleAddTask} value={newTask.title} onChange={(e) => setNewTask(prevState => ({...prevState, title: e.target.value}))} />
+                <ContainerContent>
+                    <ContainerCenter>
+                        <Title>ToDo</Title>
 
-                <ContainerTasks>
-                    {
-                        tasks.length > 0 ? tasks.map((e, index) => (
+                        <AddTask >
+                            Adicionar tarefa
+                        </AddTask>
+                        <input type="text" placeholder='Nova task' onKeyDown={HandleAddTask} value={newTask.title} onChange={(e) => setNewTask(prevState => ({...prevState, title: e.target.value}))} />
 
-                            <Task importance={e.importance} title={e.title} key={index} delete={() => HandleDeleteTask(index)} />
+                        <Title>Tarefas - {tasks.length}</Title>
+                        {
+                            tasks.length > 0 ? tasks.map((e, index) => (
 
-                        )) : 'Sem tasks'
-                    }
-                </ContainerTasks>
-                
+                                <Task importance={e.importance} title={e.title} key={index} delete={() => HandleDeleteTask(index)} />
+
+                            )) : 'Sem tasks'
+                        }
+                    </ContainerCenter>
+
+                </ContainerContent>
+
             </Container>
         </>
     )
