@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import API from '../../util/api'
 import * as Styled from './styles'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { PuffLoader } from 'react-spinners'
+import { AuthContext } from '../../context/AuthContext'
 
 export const RegisterForm = () => {
+	const { signUp } = useContext(AuthContext);
 	const [form, setForm] = useState({
 		name: '',
 		email: '',
@@ -22,9 +24,7 @@ export const RegisterForm = () => {
 
 		try {
 			const data = await toast.promise(
-				API.post('/register', {
-					...form
-				}),
+				signUp(form),
 				{
 					pending: 'Aguarde',
 					success: 'Registrado com sucesso! Por favor faça o login.',
