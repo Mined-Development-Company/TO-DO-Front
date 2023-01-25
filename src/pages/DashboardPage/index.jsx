@@ -3,8 +3,9 @@ import { toast } from 'react-toastify'
 import { AiOutlinePlus, AiFillCloseCircle } from 'react-icons/ai'
 
 import { AuthContext } from '../../context/AuthContext'
-import { SwitchDarkMode } from '../../components/SwitchDarkMode';
-import { Task } from '../../components/Task';
+import { SwitchDarkMode } from '../../components/SwitchDarkMode'
+import { Task } from '../../components/Task'
+import { Head } from '../../util/Head'
 
 import { 
     Container, 
@@ -109,6 +110,7 @@ export const DashboardPage = () => {
     return (
         <>
             <Container>
+                <Head title='Dashboard' />
                 <Header>
                     {isDarkMode ? <img src='/Logo.svg' alt='Logo ToDO' /> : <img src='/LogoWhite.svg' alt='Logo ToDO' />}
                     
@@ -182,3 +184,4 @@ export const DashboardPage = () => {
         </>
     )
 }
+
