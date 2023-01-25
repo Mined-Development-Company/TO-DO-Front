@@ -90,11 +90,22 @@ export const AddTaskModal = styled.div`
 
     display: flex;
 
-    div {
+    .left-block, .right-block {
         width: 50%;
         display: flex;
         flex-direction: column;
         gap: 15px;
+    }
+
+    .right-block {
+        padding-left: 45px;
+        justify-content: center;
+
+        .options {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
     }
 
     .title {
@@ -145,6 +156,14 @@ export const AddTaskModal = styled.div`
         font-size: 11px;
         line-height: 18px;
         width: 70%;
+        cursor: pointer;
+    }
+
+    .close-modal {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        cursor: pointer;
     }
 `;
 
@@ -153,8 +172,8 @@ export const CheckBox = styled.input.attrs({
 })`
 
     appearance: none;
-    ${({ importance }) => {
-        switch(importance) {
+    ${({ priority }) => {
+        switch(priority) {
             case 0: return 'border: 2.5px solid #972626';
             case 1: return 'border: 2.5px solid #EF7028';
             case 2: return 'border: 2.5px solid #194FD9';
@@ -170,5 +189,39 @@ export const CheckBox = styled.input.attrs({
     &:checked {
         background-color: #00600A;
         border-color: #00600A;
+    }
+`;
+
+export const CheckBoxToCreate = styled.input.attrs({
+    type: 'checkbox'
+})`
+
+    appearance: none;
+    ${({ priority }) => {
+        switch(priority) {
+            case 1: return 'border: 2.5px solid #972626';
+            case 2: return 'border: 2.5px solid #EF7028';
+            case 3: return 'border: 2.5px solid #194FD9';
+        }
+    }};
+    /* border: 2.5px solid #972626; */
+    border-radius: 6.5px;
+    width: 17px;
+    min-width: 17px;
+    height: 17px;
+    cursor: pointer;
+
+    &:checked {
+        ${({ priority }) => {
+            switch(priority) {
+                case 1: return 'background-color: #972626';
+                case 2: return 'background-color: #EF7028';
+                case 3: return 'background-color: #194FD9';
+            }
+        }};
+
+        background-image: url('/Checked.svg');
+        background-repeat: no-repeat;
+        background-position: center;
     }
 `;

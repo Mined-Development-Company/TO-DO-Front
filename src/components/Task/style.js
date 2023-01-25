@@ -22,11 +22,11 @@ export const CheckBox = styled.input.attrs({
 })`
 
     appearance: none;
-    ${({ importance }) => {
-        switch(importance) {
-            case 0: return 'border: 2.5px solid #972626';
-            case 1: return 'border: 2.5px solid #EF7028';
-            case 2: return 'border: 2.5px solid #194FD9';
+    ${({ priority }) => {
+        switch(priority) {
+            case 1: return 'border: 2.5px solid #972626';
+            case 2: return 'border: 2.5px solid #EF7028';
+            case 3: return 'border: 2.5px solid #194FD9';
         }
     }};
     /* border: 2.5px solid #972626; */
