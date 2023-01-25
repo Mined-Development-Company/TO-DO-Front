@@ -21,7 +21,7 @@ export const AuthProvider = (props) => {
 		if(isLogged) {
 			getTasks()
 		}
-	},[])
+	},[userToken])
 
 	const queryClient = useQueryClient()
 
