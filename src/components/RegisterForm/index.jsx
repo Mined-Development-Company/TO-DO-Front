@@ -8,7 +8,7 @@ import { AuthContext } from '../../context/AuthContext'
 import { PasswordInput } from '../Form/PasswordInput'
 
 export const RegisterForm = () => {
-	const { signUp } = useContext(AuthContext);
+	const { signUp } = useContext(AuthContext)
 	const [form, setForm] = useState({
 		name: '',
 		email: '',
@@ -24,30 +24,30 @@ export const RegisterForm = () => {
 		setIsLoading(true)
 
 		try {
-			const data = await toast.promise(
-				signUp(form),
-				{
+			const data = await toast
+				.promise(signUp(form), {
 					pending: 'Aguarde',
 					success: 'Registrado com sucesso! Por favor faça o login.',
 					error: {
-						render({data}) {
+						render({ data }) {
 							setIsLoading(false)
-							const { message } = data.response.data;
-							return  message ? message : 'Algo deu errado, por favor tente novamente.';
+							const { message } = data.response.data
+							return message ? message : 'Algo deu errado, por favor tente novamente.'
 						}
 					}
-				}
-				)
+				})
 				.then(() => navigate('/'))
 		} catch {}
 
 		setIsLoading(false)
 	}
 
+	const { isDarkMode } = useContext(AuthContext)
+
 	return (
 		<>
-			<Styled.BoxLogin>
-				<img src='/Logo.svg' alt='Logo ToDO' />
+			<Styled.BoxLogin isDark={isDarkMode}>
+				{isDarkMode ? <img src='/Logo.svg' alt='Logo ToDO' /> : <img src='/LogoWhite.svg' alt='Logo ToDO' />}
 				<form onSubmit={submitRegister}>
 					<label htmlFor='name'>Nome</label>
 					<input
