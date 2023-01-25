@@ -1,82 +1,187 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { toast } from 'react-toastify'
+import { AiOutlinePlus, AiFillCloseCircle } from 'react-icons/ai'
 
 import { AuthContext } from '../../context/AuthContext'
 import { SwitchDarkMode } from '../../components/SwitchDarkMode'
 import { Task } from '../../components/Task'
-
-import { Container, Header, HeaderButtons, ContainerTasks } from './styles'
 import { Head } from '../../util/Head'
 
+import { 
+    Container, 
+    Header,
+    HeaderButtons,
+    ContainerContent,
+    ContainerCenter,
+    Title,
+    AddTask,
+    AddTaskModal,
+    CheckBoxToCreate,
+} from './styles'
+
 export const DashboardPage = () => {
-	const { logout } = useContext(AuthContext)
+    const { logout, isDarkMode, createTask, userTasks, getTasks, deleteTask, updateTask } = useContext(AuthContext);
 
-	const [tasks, setTasks] = useState([
-		{
-			importance: 1,
-			title: 'Lembrar do que fazer',
-			completed: false
-		},
-		{
-			importance: 2,
-			title: 'Lembrar fazer outra coisa',
-			completed: false
-		}
-	])
+    const [tasks, setTasks] = useState([
+        {
+            priority: 1,
+            title: 'Lembrar do que fazer',
+            completed: false
+        },
+        {
+            priority: 2,
+            title: 'Lembrar fazer outra coisa',
+            completed: false
+        }
+    ])
 
-	const [newTask, setNewTask] = useState({
-		importance: 1,
-		title: '',
-		completed: false
-	})
+    const [newTask, setNewTask] = useState({
+        priority: 1,
+        title: '',
+        completed: false
+    })
 
-	const HandleLogout = () => {
-		logout()
-		toast.success('Até mais tarde!')
-	}
+    const [openNewTask, setOpenNewTask] = useState(false);
 
-	const HandleAddTask = (event) => {
-		if (event.key === 'Enter') {
-			setTasks((prevState) => [...prevState, newTask])
-			setNewTask((prevState) => ({ ...prevState, title: '' }))
-		}
-	}
+    const HandleLogout = () => {
+        logout();
+        toast.success('Até mais tarde!')
+    }
 
-	const HandleDeleteTask = (indexTask) => {
-		const newList = tasks.filter((_, index) => index !== indexTask)
-		setTasks(newList)
-	}
+    const HandleAddTask = async () => {
+        // setTasks(prevState => ([...prevState, newTask]));
+        try {
+			await toast.promise(
+				createTask(newTask),
+				{
+					pending: 'Aguarde',
+					success: {
+                        render({data}) {
+                            const { message } = data.data;
+							return message ? message : 'Tarefa adicionada!'
+                        }
+                    },
+					error: {
+						render({ data }) {
+							const { message } = data.response.data
+							return message ? message : 'Algo deu errado, por favor tente novamente.'
+						}
+					}
+				}
+			).then(() => getTasks())
+            setNewTask(prevState => ({...prevState, title: ''}));
+		} catch {}
+    }
 
-	return (
-		<>
-			<Container>
-				<Head title='Dashboard' />
-				<Header>
-					<img src='/Logo.svg' alt='Logo ToDO' />
+    const HandleAddTaskKeyboard = (event) => {
+        if(event.key === 'Enter') {
+            HandleAddTask()
+        }
+    }
 
-					<HeaderButtons>
-						<SwitchDarkMode />
+    const HandleDeleteTask = async (taskId) => {
+        
+        try {
+			await toast.promise(
+				deleteTask(taskId),
+				{
+					pending: 'Aguarde',
+					success: {
+                        render({data}) {
+                            const { message } = data.data;
+							return message ? message : 'Tarefa adicionada!'
+                        }
+                    },
+					error: {
+						render({ data }) {
+							const { message } = data.response.data
+							return message ? message : 'Algo deu errado, por favor tente novamente.'
+						}
+					}
+				}
+			).then(() => getTasks())
+		} catch {}
+    }
 
-						<img onClick={HandleLogout} src='/Logout.svg' alt='Deslogar' />
-					</HeaderButtons>
-				</Header>
+    const HandleMarkComplete = async (taskId) => {
+        updateTask(taskId);
+    }
 
-				<input
-					type='text'
-					placeholder='Nova task'
-					onKeyDown={HandleAddTask}
-					value={newTask.title}
-					onChange={(e) => setNewTask((prevState) => ({ ...prevState, title: e.target.value }))}
-				/>
+    return (
+        <>
+            <Container>
+                <Head title='Dashboard' />
+                <Header>
+                    {isDarkMode ? <img src='/Logo.svg' alt='Logo ToDO' /> : <img src='/LogoWhite.svg' alt='Logo ToDO' />}
+                    
 
-				<ContainerTasks>
-					{tasks.length > 0
-						? tasks.map((e, index) => (
-								<Task importance={e.importance} title={e.title} key={index} delete={() => HandleDeleteTask(index)} />
-						  ))
-						: 'Sem tasks'}
-				</ContainerTasks>
-			</Container>
-		</>
-	)
+                    <HeaderButtons>
+                        <SwitchDarkMode />
+                        
+                        <img onClick={HandleLogout} src="/Logout.svg" alt="Deslogar" />
+                    </HeaderButtons>
+                </Header>
+
+                <ContainerContent>
+                    <ContainerCenter>
+                        <Title>ToDo</Title>
+
+                        <AddTask opened={openNewTask} onClick={() => setOpenNewTask(prevState => !prevState)}>
+                            <div className="plus-button">
+                                <AiOutlinePlus
+                                    size={24}
+                                    color={isDarkMode ? '#000000' : '#FFFFFF'}
+                                />
+                            </div>
+                            Adicionar tarefa
+                        </AddTask>
+                        {
+                            openNewTask && (
+                                <AddTaskModal>
+                                    <div className='left-block'>
+                                        <p className="title">Nome da tarefa</p>
+                                        <p className="subtitle">Adicione novas tarefas à sua lista e organize seu dia com facilidade.</p>
+                                        <input className='input' type="text" placeholder='Nome' onKeyDown={HandleAddTaskKeyboard} value={newTask.title} onChange={(e) => setNewTask(prevState => ({...prevState, title: e.target.value}))} />
+                                        <button className='button' onClick={HandleAddTask}>ADICIONAR TAREFA</button>
+                                    </div>
+                                    <div className='right-block'>
+                                        <span className='options'>
+                                            <CheckBoxToCreate priority={1} checked={newTask.priority == 1} onChange={() => setNewTask(prevState => ({...prevState, priority: 1}))} />
+                                            Urgente
+                                        </span>
+                                        <span className='options'>
+                                            <CheckBoxToCreate priority={2} checked={newTask.priority == 2} onChange={() => setNewTask(prevState => ({...prevState, priority: 2}))} />
+                                            Importante
+                                        </span>
+                                        <span className='options'>
+                                            <CheckBoxToCreate priority={3} checked={newTask.priority == 3} onChange={() => setNewTask(prevState => ({...prevState, priority: 3}))} />
+                                            Não urgente
+                                        </span>
+                                    </div>
+                                    <div className="close-modal" onClick={() => setOpenNewTask(prevState => !prevState)}>
+                                        <AiFillCloseCircle
+                                            size={24}
+                                            color={'#194FD9'}
+                                        />
+                                    </div>
+                                </AddTaskModal>
+                            )
+                        }
+
+                        <Title>Tarefas - {tasks.length}</Title>
+                        {
+                            userTasks.length > 0 ? userTasks.map((e, index) => (
+
+                                <Task priority={e.priority} title={e.title} completed={e.completed} key={index} delete={() => HandleDeleteTask(e.id)} markComplete={() => HandleMarkComplete(e.id)} />
+
+                            )) : 'Sem tasks'
+                        }
+                    </ContainerCenter>
+
+                </ContainerContent>
+
+            </Container>
+        </>
+    )
 }
+
