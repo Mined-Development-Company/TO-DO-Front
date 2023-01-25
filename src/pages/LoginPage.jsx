@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { LoginForm } from '../components/LoginForm'
+import { Head } from '../util/Head'
 
 const StyledMain = styled.main`
 	background-color: ${({ theme }) => theme.colors.AzulEscuro};
@@ -28,6 +29,7 @@ const StyledMain = styled.main`
 export const LoginPage = () => {
 	return (
 		<StyledMain>
+			<Head title='Login' />
 			<LoginForm />
 		</StyledMain>
 	)

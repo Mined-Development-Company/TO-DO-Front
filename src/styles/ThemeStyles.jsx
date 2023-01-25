@@ -1,8 +1,12 @@
+import React, { useContext } from 'react'
+import { AuthContext } from '../context/AuthContext'
 import { ThemeProvider } from 'styled-components'
 
-const isModeDark = true;
+const darkMode = localStorage.getItem('darkmode');
 
-const theme = isModeDark ? {
+const isModeDark = darkMode ? JSON.parse(darkMode) : true;
+
+const darkTheme = {
 	colors: {
 		Primary: '#194FD9',
 		White: '#ffffff',
@@ -17,15 +21,17 @@ const theme = isModeDark ? {
 		padding: '0 1rem',
 		margin: '0 auto'
 	}
-} : {
+}
+
+const whiteTheme = {
 	colors: {
 		Primary: '#194FD9',
 		White: '#ffffff',
 		Bg: '#CFCFCF',
-		Cinza: '#B8B8B8',
+		Cinza: '#B3B3B3',
 		AzulEscuro: '#CFCFCF',
-		CinzaEscuro: '#21212B',
-		CinzaText: '#A8A8A8'
+		CinzaEscuro: '#FFFFFF',
+		CinzaText: '#000000'
 	},
 	container: {
 		maxWidth: '1400px',
@@ -34,8 +40,10 @@ const theme = isModeDark ? {
 	}
 }
 
-// ${() => isModeDark ?'#000814' : '#CFCFCF'}
+const Theme = ({ children }) => {
+	const { isDarkMode } = useContext(AuthContext);
 
-const Theme = ({ children }) => <ThemeProvider theme={theme}>{children}</ThemeProvider>
+	return <ThemeProvider theme={isDarkMode ? darkTheme : whiteTheme}>{children}</ThemeProvider>
+}
 
 export default Theme

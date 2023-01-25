@@ -17,7 +17,7 @@ export const Task = (props) => {
     return (
         <ContainerTask>
             <CheckBoxWithTitle>
-                <CheckBox importance={props.importance} />
+                <CheckBox priority={props.priority} onChange={() => props.markComplete()} checked={props.completed} />
                 <Title>
                     {props.title}
                 </Title>
