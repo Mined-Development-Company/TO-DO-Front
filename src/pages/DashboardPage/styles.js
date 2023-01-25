@@ -55,17 +55,17 @@ export const Title = styled.p`
 
 export const AddTask = styled.div`
 	background-color: ${({ theme }) => theme.colors.CinzaEscuro};
-	width: 201px;
 	height: 54px;
 	border: 0.3px solid #21212b;
 	border-radius: 20px;
 	display: flex;
+	gap: 15px;
 	align-items: center;
 	justify-content: space-between;
 	padding: 0 20px;
 	cursor: pointer;
 	align-self: flex-start;
-	color: ${({ theme }) => theme.colors.CinzaText};
+	color: ${({ theme }) => theme.colors.TextBase};
 
 	${({ opened }) => {
 		return opened && 'text-decoration: underline'
@@ -88,22 +88,23 @@ export const AddTaskModal = styled.div`
 	border-radius: 13px;
 
 	display: flex;
+	flex-direction: column;
 
 	.left-block,
 	.right-block {
-		width: 50%;
 		display: flex;
 		flex-direction: column;
 		gap: 15px;
 	}
 
 	.right-block {
-		padding-left: 45px;
-		justify-content: center;
+		display: flex;
+		flex-direction: row;
+		gap: 30px;
 
 		.options {
 			display: flex;
-			gap: 20px;
+			gap: 10px;
 			align-items: center;
 			color: ${({ theme }) => theme.colors.TextBase};
 		}
@@ -146,6 +147,7 @@ export const AddTaskModal = styled.div`
 		appearance: none;
 		outline: none;
 		border: none;
+		margin-top: 10px;
 		padding: 7px 21px;
 		border-radius: 6.5px;
 		display: flex;
@@ -158,6 +160,10 @@ export const AddTaskModal = styled.div`
 		line-height: 18px;
 		width: 70%;
 		cursor: pointer;
+
+		&:hover {
+			background-color: #08246c;
+		}
 	}
 
 	.close-modal {
@@ -211,9 +217,9 @@ export const CheckBoxToCreate = styled.input.attrs({
 	}};
 	/* border: 2.5px solid #972626; */
 	border-radius: 6.5px;
-	width: 17px;
-	min-width: 17px;
-	height: 17px;
+	width: 25px;
+	min-width: 25px;
+	height: 25px;
 	cursor: pointer;
 
 	&:checked {

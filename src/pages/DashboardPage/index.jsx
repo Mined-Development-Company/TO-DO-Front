@@ -141,35 +141,35 @@ export const DashboardPage = () => {
 										value={newTask.title}
 										onChange={(e) => setNewTask((prevState) => ({ ...prevState, title: e.target.value }))}
 									/>
+									<div className='right-block'>
+										<span className='options'>
+											<CheckBoxToCreate
+												priority={1}
+												checked={newTask.priority == 1}
+												onChange={() => setNewTask((prevState) => ({ ...prevState, priority: 1 }))}
+											/>
+											Urgente
+										</span>
+										<span className='options'>
+											<CheckBoxToCreate
+												priority={2}
+												checked={newTask.priority == 2}
+												onChange={() => setNewTask((prevState) => ({ ...prevState, priority: 2 }))}
+											/>
+											Importante
+										</span>
+										<span className='options'>
+											<CheckBoxToCreate
+												priority={3}
+												checked={newTask.priority == 3}
+												onChange={() => setNewTask((prevState) => ({ ...prevState, priority: 3 }))}
+											/>
+											Não urgente
+										</span>
+									</div>
 									<button className='button' onClick={HandleAddTask}>
 										ADICIONAR TAREFA
 									</button>
-								</div>
-								<div className='right-block'>
-									<span className='options'>
-										<CheckBoxToCreate
-											priority={1}
-											checked={newTask.priority == 1}
-											onChange={() => setNewTask((prevState) => ({ ...prevState, priority: 1 }))}
-										/>
-										Urgente
-									</span>
-									<span className='options'>
-										<CheckBoxToCreate
-											priority={2}
-											checked={newTask.priority == 2}
-											onChange={() => setNewTask((prevState) => ({ ...prevState, priority: 2 }))}
-										/>
-										Importante
-									</span>
-									<span className='options'>
-										<CheckBoxToCreate
-											priority={3}
-											checked={newTask.priority == 3}
-											onChange={() => setNewTask((prevState) => ({ ...prevState, priority: 3 }))}
-										/>
-										Não urgente
-									</span>
 								</div>
 								<div className='close-modal' onClick={() => setOpenNewTask((prevState) => !prevState)}>
 									<AiFillCloseCircle size={24} color={'#194FD9'} />
