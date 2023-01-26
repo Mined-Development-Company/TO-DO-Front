@@ -181,7 +181,8 @@ export const DashboardPage = () => {
 							</AddTaskModal>
 						)}
 						<Title>
-							{userTasks[0]} {userTasks[0] == 1 ? 'Tarefa' : 'Tarefas'} - Página {page} de {totalPages}
+							{userTasks[0]} {userTasks[0] == 1 ? 'Tarefa' : 'Tarefas'}{' '}
+							{userTasks[0] !== 0 ? `- Página ${page} de ${totalPages}` : ``}
 						</Title>
 						Exibir:
 						<select onChange={HandleChangeSelect} defaultValue={qtyPage}>
@@ -201,7 +202,7 @@ export const DashboardPage = () => {
 									/>
 							  ))
 							: 'Sem tasks'}
-						{page > 1 ? (
+						{userTasks[0] !== 0 && page > 1 ? (
 							<button
 								onClick={() => {
 									setPage(page - 1)
@@ -211,7 +212,7 @@ export const DashboardPage = () => {
 						) : (
 							''
 						)}
-						{page === totalPages ? (
+						{userTasks[0] === 0 || page === totalPages ? (
 							''
 						) : (
 							<button
