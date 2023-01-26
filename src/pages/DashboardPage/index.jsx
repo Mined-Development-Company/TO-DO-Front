@@ -20,20 +20,22 @@ import {
 } from './styles'
 
 export const DashboardPage = () => {
-	const { logout, isDarkMode, createTask, userTasks, getTasks, deleteTask, updateTask } = useContext(AuthContext)
+	const {
+		logout,
+		isDarkMode,
+		createTask,
+		userTasks,
+		getTasks,
+		deleteTask,
+		updateTask,
+		page,
+		setPage,
+		qtyPage,
+		setQtyPage
+	} = useContext(AuthContext)
 
-	const [tasks, setTasks] = useState([
-		{
-			priority: 1,
-			title: 'Lembrar do que fazer',
-			completed: false
-		},
-		{
-			priority: 2,
-			title: 'Lembrar fazer outra coisa',
-			completed: false
-		}
-	])
+	const totalTasks = userTasks[0]
+	const totalPages = Math.ceil(totalTasks / qtyPage)
 
 	const [newTask, setNewTask] = useState({
 		priority: 1,
@@ -49,7 +51,6 @@ export const DashboardPage = () => {
 	}
 
 	const HandleAddTask = async () => {
-		// setTasks(prevState => ([...prevState, newTask]));
 		try {
 			await toast
 				.promise(createTask(newTask), {
@@ -104,6 +105,10 @@ export const DashboardPage = () => {
 		updateTask(taskId)
 	}
 
+	const HandleChangeSelect = (event) => {
+		setQtyPage(event.target.value)
+	}
+
 	return (
 		<>
 			<Container>
@@ -121,7 +126,6 @@ export const DashboardPage = () => {
 				<ContainerContent>
 					<ContainerCenter>
 						<Title>ToDo</Title>
-
 						<AddTask opened={openNewTask} onClick={() => setOpenNewTask((prevState) => !prevState)}>
 							<div className='plus-button'>
 								<AiOutlinePlus size={24} color={isDarkMode ? '#000000' : '#FFFFFF'} />
@@ -176,10 +180,17 @@ export const DashboardPage = () => {
 								</div>
 							</AddTaskModal>
 						)}
-
-						<Title>Tarefas - {tasks.length}</Title>
-						{userTasks.length > 0
-							? userTasks.map((e, index) => (
+						<Title>
+							{userTasks[0]} {userTasks[0] == 1 ? 'Tarefa' : 'Tarefas'} - Página {page} de {totalPages}
+						</Title>
+						Exibir:
+						<select onChange={HandleChangeSelect} defaultValue={qtyPage}>
+							<option value='5'>5</option>
+							<option value='10'>10</option>
+							<option value='15'>15</option>
+						</select>
+						{userTasks[0] > 0
+							? userTasks[1].map((e, index) => (
 									<Task
 										priority={e.priority}
 										title={e.title}
@@ -190,6 +201,26 @@ export const DashboardPage = () => {
 									/>
 							  ))
 							: 'Sem tasks'}
+						{page > 1 ? (
+							<button
+								onClick={() => {
+									setPage(page - 1)
+								}}>
+								Anterior
+							</button>
+						) : (
+							''
+						)}
+						{page === totalPages ? (
+							''
+						) : (
+							<button
+								onClick={() => {
+									setPage(page + 1)
+								}}>
+								Próximo
+							</button>
+						)}
 					</ContainerCenter>
 				</ContainerContent>
 			</Container>
