@@ -8,7 +8,7 @@ import { AuthContext } from '../../context/AuthContext'
 import { PasswordInput } from '../Form/PasswordInput'
 
 export const LoginForm = () => {
-	const { signIn } = useContext(AuthContext);
+	const { signIn } = useContext(AuthContext)
 	const [form, setForm] = useState({
 		email: '',
 		password: ''
@@ -21,29 +21,28 @@ export const LoginForm = () => {
 		setIsLoading(true)
 
 		try {
-			const data = await toast.promise(
-				signIn(form),
-				{
-					pending: 'Aguarde',
-					success: 'Logado com sucesso!',
-					error: {
-						render({ data }) {
-							setIsLoading(false)
-							const { message } = data.response.data
-							return message ? message : 'Algo deu errado, por favor tente novamente.'
-						}
+			const data = await toast.promise(signIn(form), {
+				pending: 'Aguarde',
+				success: 'Logado com sucesso!',
+				error: {
+					render({ data }) {
+						setIsLoading(false)
+						const { message } = data.response.data
+						return message ? message : 'Algo deu errado, por favor tente novamente.'
 					}
 				}
-			)
+			})
 		} catch {}
 
 		setIsLoading(false)
 	}
 
+	const { isDarkMode } = useContext(AuthContext)
+
 	return (
 		<>
-			<Styled.BoxLogin>
-				<img src='/Logo.svg' alt='Logo ToDO' />
+			<Styled.BoxLogin isDark={isDarkMode}>
+				{isDarkMode ? <img src='/Logo.svg' alt='Logo ToDO' /> : <img src='/LogoWhite.svg' alt='Logo ToDO' />}
 				<form onSubmit={submitLogin}>
 					<label htmlFor='email'>Email</label>
 					<input

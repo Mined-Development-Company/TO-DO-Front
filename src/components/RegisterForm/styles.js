@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const BoxLogin = styled.div`
 	width: 100%;
@@ -7,6 +7,15 @@ export const BoxLogin = styled.div`
 	padding-bottom: 73px;
 
 	background-color: ${({ theme }) => theme.colors.CinzaEscuro};
+
+	${(props) => {
+		switch (props.isDark) {
+			case false:
+				return css`
+					background: rgba(255, 255, 255, 0.6);
+				`
+		}
+	}}
 
 	display: flex;
 	flex-direction: column;
@@ -19,7 +28,6 @@ export const BoxLogin = styled.div`
 		object-fit: cover;
 
 		width: 270px;
-		height: 70px;
 
 		margin: 28px 0px 0px 0px;
 	}
@@ -40,6 +48,8 @@ export const BoxLogin = styled.div`
 
 		margin-bottom: 14px;
 		margin-top: 14px;
+
+		color: ${({ theme }) => theme.colors.TextBase};
 	}
 	input {
 		display: block;
