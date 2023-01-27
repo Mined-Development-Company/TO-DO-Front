@@ -277,9 +277,11 @@ export const FilterModal = styled.div`
 
 	select {
 		margin: 20px 0 20px 20px;
-		padding: 5px 50px 5px 0;
+		padding: 5px 50px 5px 10px;
 		background: #d9d9d9;
 		border-radius: 5px;
+		font-size: 12px;
+		font-weight: 600;
 	}
 
 	.filter_options {
