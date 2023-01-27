@@ -115,7 +115,6 @@ export const DashboardPage = () => {
 	}
 
 	const filteredTask = userTasks[1].filter((task) => task.priority === filterNumber.priority)
-
 	return (
 		<>
 			<Container>
@@ -228,14 +227,14 @@ export const DashboardPage = () => {
 
 										<span className='options'>
 											<CheckBoxToCreate
-												priority={2}
+												priority={0}
 												checked={filterNumber.priority === 0}
-												onChange={() => setFilterNumber(0)}
+												onChange={() => setFilterNumber((prevState) => ({ ...prevState, priority: 0 }, 0))}
 											/>
 											Todas
 										</span>
 									</div>
-
+									<h2>Exibir:</h2>
 									<select onChange={HandleChangeSelect} defaultValue={qtyPage}>
 										<option value='5'>5</option>
 										<option value='10'>10</option>

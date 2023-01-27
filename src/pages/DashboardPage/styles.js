@@ -207,6 +207,10 @@ export const CheckBoxToCreate = styled.input.attrs({
 	appearance: none;
 	${({ priority }) => {
 		switch (priority) {
+			case 0:
+				return `
+				border: 2.5px solid #0CB8B3
+				`
 			case 1:
 				return 'border: 2.5px solid #972626'
 			case 2:
@@ -262,6 +266,7 @@ export const FilterModal = styled.div`
 	height: max-content;
 	width: 100%;
 	max-width: 163px;
+	z-index: 999;
 
 	position: absolute;
 	right: 38px;
