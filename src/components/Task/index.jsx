@@ -17,13 +17,13 @@ export const Task = (props) => {
     return (
         <ContainerTask>
             <CheckBoxWithTitle>
-                <CheckBox priority={props.priority} onChange={() => props.markComplete()} checked={props.completed} />
+                <CheckBox priority={props.priority} onChange={() => props.markComplete()} checked={props.completed} title={(props.completed) ? 'Marcar como incompleta' : 'Marcar como concluída'} />
                 <Title>
                     {props.title}
                 </Title>
             </CheckBoxWithTitle>
 
-            <TrashButton onClick={props.delete} onMouseEnter={() => lottierRef.current.play()} onMouseLeave={() => lottierRef.current.stop()}>
+            <TrashButton onClick={props.delete} onMouseEnter={() => lottierRef.current.play()} onMouseLeave={() => lottierRef.current.stop()} title='Excluir esta tarefa'>
                 <Lottie lottieRef={lottierRef} autoplay={false} loop={false} animationData={TrashAnimated} />
             </TrashButton>
         </ContainerTask>
