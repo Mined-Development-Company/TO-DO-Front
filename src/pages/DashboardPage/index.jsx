@@ -48,6 +48,7 @@ export const DashboardPage = () => {
 
 	const [openNewTask, setOpenNewTask] = useState(false)
 	const [openFilterModal, setOpenFilterModal] = useState(false)
+	const [filterNumber, setFilterNumber] = useState(0)
 
 	const HandleLogout = () => {
 		logout()
@@ -112,6 +113,8 @@ export const DashboardPage = () => {
 	const HandleChangeSelect = (event) => {
 		setQtyPage(event.target.value)
 	}
+
+	const filteredTask = userTasks[1].filter((task) => task.priority === filterNumber.priority)
 
 	return (
 		<>
@@ -197,18 +200,39 @@ export const DashboardPage = () => {
 
 									<div className='filter_options'>
 										<span className='options'>
-											<CheckBoxToCreate priority={1} />
+											<CheckBoxToCreate
+												priority={1}
+												checked={filterNumber.priority === 1}
+												onChange={() => setFilterNumber((prevState) => ({ ...prevState, priority: 1 }))}
+											/>
 											Urgente
 										</span>
 
 										<span className='options'>
-											<CheckBoxToCreate priority={2} />
+											<CheckBoxToCreate
+												priority={2}
+												checked={filterNumber.priority === 2}
+												onChange={() => setFilterNumber((prevState) => ({ ...prevState, priority: 2 }))}
+											/>
 											Importante
 										</span>
 
 										<span className='options'>
-											<CheckBoxToCreate priority={3} />
+											<CheckBoxToCreate
+												priority={3}
+												checked={filterNumber.priority === 3}
+												onChange={() => setFilterNumber((prevState) => ({ ...prevState, priority: 3 }))}
+											/>
 											Não urgente
+										</span>
+
+										<span className='options'>
+											<CheckBoxToCreate
+												priority={2}
+												checked={filterNumber.priority === 0}
+												onChange={() => setFilterNumber(0)}
+											/>
+											Todas
 										</span>
 									</div>
 
@@ -220,7 +244,19 @@ export const DashboardPage = () => {
 								</FilterModal>
 							) : null}
 						</Filter>
-						{userTasks[0] > 0
+
+						{filterNumber
+							? filteredTask.map((e, index) => (
+									<Task
+										priority={e.priority}
+										title={e.title}
+										completed={e.completed}
+										key={index}
+										delete={() => HandleDeleteTask(e.id)}
+										markComplete={() => HandleMarkComplete(e.id)}
+									/>
+							  ))
+							: userTasks[0] > 0
 							? userTasks[1].map((e, index) => (
 									<Task
 										priority={e.priority}
@@ -232,6 +268,19 @@ export const DashboardPage = () => {
 									/>
 							  ))
 							: 'Sem tasks'}
+
+						{/* {userTasks[0] > 0
+							? userTasks[1].map((e, index) => (
+									<Task
+										priority={e.priority}
+										title={e.title}
+										completed={e.completed}
+										key={index}
+										delete={() => HandleDeleteTask(e.id)}
+										markComplete={() => HandleMarkComplete(e.id)}
+									/>
+							  ))
+							: 'Sem tasks'} */}
 						{page > 1 ? (
 							<button
 								onClick={() => {
