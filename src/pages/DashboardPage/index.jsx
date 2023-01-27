@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { toast } from 'react-toastify'
 import { AiOutlinePlus, AiFillCloseCircle } from 'react-icons/ai'
+import { BsFilterRight } from 'react-icons/bs'
 
 import { AuthContext } from '../../context/AuthContext'
 import { SwitchDarkMode } from '../../components/SwitchDarkMode'
@@ -191,7 +192,7 @@ export const DashboardPage = () => {
 								<Title>
 									{userTasks[0]} {userTasks[0] == 1 ? 'Tarefa' : 'Tarefas'} - Página {page} de {totalPages}
 								</Title>
-								<img src='/Filter.svg' alt='Logo do filtro' onClick={() => setOpenFilterModal(!openFilterModal)} />
+								<BsFilterRight size={40} onClick={() => setOpenFilterModal(!openFilterModal)} />
 							</TitleFilter>
 							{openFilterModal ? (
 								<FilterModal>
@@ -231,7 +232,7 @@ export const DashboardPage = () => {
 												checked={filterNumber.priority === 0}
 												onChange={() => setFilterNumber((prevState) => ({ ...prevState, priority: 0 }, 0))}
 											/>
-											Todas
+											Desmarcar
 										</span>
 									</div>
 									<h2>Exibir:</h2>

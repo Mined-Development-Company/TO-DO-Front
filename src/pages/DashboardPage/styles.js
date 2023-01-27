@@ -102,6 +102,11 @@ export const AddTaskModal = styled.div`
 		flex-direction: row;
 		gap: 30px;
 
+		@media (max-width: 600px) {
+			display: flex;
+			flex-direction: column;
+		}
+
 		.options {
 			display: flex;
 			gap: 10px;
@@ -158,7 +163,7 @@ export const AddTaskModal = styled.div`
 		font-weight: 600;
 		font-size: 11px;
 		line-height: 18px;
-		width: 70%;
+		width: 100%;
 		cursor: pointer;
 
 		&:hover {
@@ -254,7 +259,7 @@ export const TitleFilter = styled.div`
 	display: flex;
 	justify-content: space-between;
 
-	img {
+	svg {
 		cursor: pointer;
 	}
 `
