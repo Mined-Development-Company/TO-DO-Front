@@ -239,3 +239,46 @@ export const CheckBoxToCreate = styled.input.attrs({
 		background-position: center;
 	}
 `
+
+export const Filter = styled.div`
+	width: 100%;
+	position: relative;
+`
+
+export const TitleFilter = styled.div`
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+
+	img {
+		cursor: pointer;
+	}
+`
+
+export const FilterModal = styled.div`
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	background-color: #21212b;
+	border-radius: 14px;
+	height: 225px;
+	width: 100%;
+	max-width: 163px;
+
+	position: absolute;
+	right: 38px;
+	top: 0px;
+
+	h2 {
+		font-family: 'Poppins';
+		font-style: normal;
+		font-weight: 600;
+		font-size: 14px;
+		padding: 20px 0 0 20px;
+	}
+
+	select {
+		margin: 20px 0 0 20px;
+		padding: 5px 50px 5px 0;
+		background: #d9d9d9;
+		border-radius: 5px;
+	}
+`

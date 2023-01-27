@@ -16,7 +16,10 @@ import {
 	Title,
 	AddTask,
 	AddTaskModal,
-	CheckBoxToCreate
+	CheckBoxToCreate,
+	TitleFilter,
+	Filter,
+	FilterModal
 } from './styles'
 
 export const DashboardPage = () => {
@@ -44,6 +47,7 @@ export const DashboardPage = () => {
 	})
 
 	const [openNewTask, setOpenNewTask] = useState(false)
+	const [openFilterModal, setOpenFilterModal] = useState(false)
 
 	const HandleLogout = () => {
 		logout()
@@ -180,15 +184,25 @@ export const DashboardPage = () => {
 								</div>
 							</AddTaskModal>
 						)}
-						<Title>
-							{userTasks[0]} {userTasks[0] == 1 ? 'Tarefa' : 'Tarefas'} - Página {page} de {totalPages}
-						</Title>
-						Exibir:
-						<select onChange={HandleChangeSelect} defaultValue={qtyPage}>
-							<option value='5'>5</option>
-							<option value='10'>10</option>
-							<option value='15'>15</option>
-						</select>
+						<Filter>
+							<TitleFilter>
+								<Title>
+									{userTasks[0]} {userTasks[0] == 1 ? 'Tarefa' : 'Tarefas'} - Página {page} de {totalPages}
+								</Title>
+								<img src='/Filter.svg' alt='Logo do filtro' onClick={() => setOpenFilterModal(!openFilterModal)} />
+							</TitleFilter>
+							{openFilterModal ? (
+								<FilterModal>
+									<h2>Filtrar por preferências.</h2>
+
+									<select onChange={HandleChangeSelect} defaultValue={qtyPage}>
+										<option value='5'>5</option>
+										<option value='10'>10</option>
+										<option value='15'>15</option>
+									</select>
+								</FilterModal>
+							) : null}
+						</Filter>
 						{userTasks[0] > 0
 							? userTasks[1].map((e, index) => (
 									<Task
