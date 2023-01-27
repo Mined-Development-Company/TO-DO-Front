@@ -259,7 +259,7 @@ export const FilterModal = styled.div`
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	background-color: #21212b;
 	border-radius: 14px;
-	height: 225px;
+	height: max-content;
 	width: 100%;
 	max-width: 163px;
 
@@ -276,9 +276,26 @@ export const FilterModal = styled.div`
 	}
 
 	select {
-		margin: 20px 0 0 20px;
+		margin: 20px 0 20px 20px;
 		padding: 5px 50px 5px 0;
 		background: #d9d9d9;
 		border-radius: 5px;
+	}
+
+	.filter_options {
+		margin: 20px 0 0 20px;
+		gap: 20px;
+		display: flex;
+		flex-direction: column;
+
+		span {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			color: #adadad;
+			font-family: 'Poppins';
+			font-weight: 600;
+			font-size: 14px;
+		}
 	}
 `

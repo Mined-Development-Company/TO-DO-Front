@@ -195,6 +195,23 @@ export const DashboardPage = () => {
 								<FilterModal>
 									<h2>Filtrar por preferências.</h2>
 
+									<div className='filter_options'>
+										<span className='options'>
+											<CheckBoxToCreate priority={1} />
+											Urgente
+										</span>
+
+										<span className='options'>
+											<CheckBoxToCreate priority={2} />
+											Importante
+										</span>
+
+										<span className='options'>
+											<CheckBoxToCreate priority={3} />
+											Não urgente
+										</span>
+									</div>
+
 									<select onChange={HandleChangeSelect} defaultValue={qtyPage}>
 										<option value='5'>5</option>
 										<option value='10'>10</option>
