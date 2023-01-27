@@ -126,7 +126,7 @@ export const DashboardPage = () => {
 				<ContainerContent>
 					<ContainerCenter>
 						<Title>ToDo</Title>
-						<AddTask opened={openNewTask} onClick={() => setOpenNewTask((prevState) => !prevState)}>
+						<AddTask opened={openNewTask} onClick={() => setOpenNewTask((prevState) => !prevState)} tabIndex='0'>
 							<div className='plus-button'>
 								<AiOutlinePlus size={24} color={isDarkMode ? '#000000' : '#FFFFFF'} />
 							</div>

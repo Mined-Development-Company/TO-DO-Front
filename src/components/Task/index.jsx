@@ -23,7 +23,7 @@ export const Task = (props) => {
                 </Title>
             </CheckBoxWithTitle>
 
-            <TrashButton onClick={props.delete} onMouseEnter={() => lottierRef.current.play()} onMouseLeave={() => lottierRef.current.stop()} title='Excluir esta tarefa'>
+            <TrashButton onClick={props.delete} onMouseEnter={() => lottierRef.current.play()} onMouseLeave={() => lottierRef.current.stop()} title='Excluir esta tarefa' tabIndex='0'>
                 <Lottie lottieRef={lottierRef} autoplay={false} loop={false} animationData={TrashAnimated} />
             </TrashButton>
         </ContainerTask>
