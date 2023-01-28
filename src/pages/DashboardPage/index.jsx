@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { toast } from 'react-toastify'
 import { AiOutlinePlus, AiFillCloseCircle } from 'react-icons/ai'
+import { BsFilterRight } from 'react-icons/bs'
 
 import { AuthContext } from '../../context/AuthContext'
 import { SwitchDarkMode } from '../../components/SwitchDarkMode'
@@ -16,7 +17,10 @@ import {
 	Title,
 	AddTask,
 	AddTaskModal,
-	CheckBoxToCreate
+	CheckBoxToCreate,
+	TitleFilter,
+	Filter,
+	FilterModal
 } from './styles'
 
 export const DashboardPage = () => {
@@ -44,6 +48,8 @@ export const DashboardPage = () => {
 	})
 
 	const [openNewTask, setOpenNewTask] = useState(false)
+	const [openFilterModal, setOpenFilterModal] = useState(false)
+	const [filterNumber, setFilterNumber] = useState(0)
 
 	const HandleLogout = () => {
 		logout()
@@ -109,6 +115,7 @@ export const DashboardPage = () => {
 		setQtyPage(event.target.value)
 	}
 
+	const filteredTask = userTasks[1].filter((task) => task.priority === filterNumber.priority)
 	return (
 		<>
 			<Container>
@@ -180,17 +187,76 @@ export const DashboardPage = () => {
 								</div>
 							</AddTaskModal>
 						)}
-						<Title>
-							{userTasks[0]} {userTasks[0] == 1 ? 'Tarefa' : 'Tarefas'}{' '}
-							{userTasks[0] !== 0 ? `- Página ${page} de ${totalPages}` : ``}
-						</Title>
-						Exibir:
-						<select onChange={HandleChangeSelect} defaultValue={qtyPage}>
-							<option value='5'>5</option>
-							<option value='10'>10</option>
-							<option value='15'>15</option>
-						</select>
-						{userTasks[0] > 0
+						<Filter>
+							<TitleFilter>
+								<Title>
+									{userTasks[0]} {userTasks[0] == 1 ? 'Tarefa' : 'Tarefas'} - Página {page} de {totalPages}
+								</Title>
+								<BsFilterRight size={40} onClick={() => setOpenFilterModal(!openFilterModal)} />
+							</TitleFilter>
+							{openFilterModal ? (
+								<FilterModal>
+									<h2>Filtrar por preferências.</h2>
+
+									<div className='filter_options'>
+										<span className='options'>
+											<CheckBoxToCreate
+												priority={1}
+												checked={filterNumber.priority === 1}
+												onChange={() => setFilterNumber((prevState) => ({ ...prevState, priority: 1 }))}
+											/>
+											Urgente
+										</span>
+
+										<span className='options'>
+											<CheckBoxToCreate
+												priority={2}
+												checked={filterNumber.priority === 2}
+												onChange={() => setFilterNumber((prevState) => ({ ...prevState, priority: 2 }))}
+											/>
+											Importante
+										</span>
+
+										<span className='options'>
+											<CheckBoxToCreate
+												priority={3}
+												checked={filterNumber.priority === 3}
+												onChange={() => setFilterNumber((prevState) => ({ ...prevState, priority: 3 }))}
+											/>
+											Não urgente
+										</span>
+
+										<span className='options'>
+											<CheckBoxToCreate
+												priority={0}
+												checked={filterNumber.priority === 0}
+												onChange={() => setFilterNumber((prevState) => ({ ...prevState, priority: 0 }, 0))}
+											/>
+											Desmarcar
+										</span>
+									</div>
+									<h2>Exibir:</h2>
+									<select onChange={HandleChangeSelect} defaultValue={qtyPage}>
+										<option value='5'>5</option>
+										<option value='10'>10</option>
+										<option value='15'>15</option>
+									</select>
+								</FilterModal>
+							) : null}
+						</Filter>
+
+						{filterNumber
+							? filteredTask.map((e, index) => (
+									<Task
+										priority={e.priority}
+										title={e.title}
+										completed={e.completed}
+										key={index}
+										delete={() => HandleDeleteTask(e.id)}
+										markComplete={() => HandleMarkComplete(e.id)}
+									/>
+							  ))
+							: userTasks[0] > 0
 							? userTasks[1].map((e, index) => (
 									<Task
 										priority={e.priority}
@@ -202,7 +268,20 @@ export const DashboardPage = () => {
 									/>
 							  ))
 							: 'Sem tasks'}
-						{userTasks[0] !== 0 && page > 1 ? (
+
+						{/* {userTasks[0] > 0
+							? userTasks[1].map((e, index) => (
+									<Task
+										priority={e.priority}
+										title={e.title}
+										completed={e.completed}
+										key={index}
+										delete={() => HandleDeleteTask(e.id)}
+										markComplete={() => HandleMarkComplete(e.id)}
+									/>
+							  ))
+							: 'Sem tasks'} */}
+						{page > 1 ? (
 							<button
 								onClick={() => {
 									setPage(page - 1)
