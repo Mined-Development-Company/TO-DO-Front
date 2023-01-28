@@ -63,7 +63,7 @@ export const LoginForm = () => {
 					/>
 
 					<h1>
-						Não esta cadastrado? <Link to='/register'>Registre-se</Link>
+						Não está cadastrado? <Link to='/register'>Registre-se</Link>
 					</h1>
 
 					<Styled.ButtonSubmit type='submit' disabled={isLoading}>

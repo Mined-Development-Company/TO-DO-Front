@@ -27,12 +27,12 @@ export const RegisterForm = () => {
 			const data = await toast
 				.promise(signUp(form), {
 					pending: 'Aguarde',
-					success: 'Registrado com sucesso! Por favor faça o login.',
+					success: 'Registrado com sucesso! Por favor, faça o login.',
 					error: {
 						render({ data }) {
 							setIsLoading(false)
 							const { message } = data.response.data
-							return message ? message : 'Algo deu errado, por favor tente novamente.'
+							return message ? message : 'Algo deu errado. Por favor, tente novamente.'
 						}
 					}
 				})

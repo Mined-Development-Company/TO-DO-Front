@@ -10,6 +10,12 @@ export const ContainerSwitch = styled.div`
     height: 2em;
     }
 
+    .switch:has(> input:focus) {
+        border-radius: 30px;
+        outline: 2px solid ${({ theme }) => theme.colors.Primary};
+        outline-offset: 2px;
+    }
+
     /* Hide default HTML checkbox */
     .switch input {
     opacity: 0;

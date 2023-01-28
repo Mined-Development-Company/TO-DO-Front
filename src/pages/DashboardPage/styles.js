@@ -102,6 +102,11 @@ export const AddTaskModal = styled.div`
 		flex-direction: row;
 		gap: 30px;
 
+		@media (max-width: 600px) {
+			display: flex;
+			flex-direction: column;
+		}
+
 		.options {
 			display: flex;
 			gap: 10px;
@@ -158,7 +163,7 @@ export const AddTaskModal = styled.div`
 		font-weight: 600;
 		font-size: 11px;
 		line-height: 18px;
-		width: 70%;
+		width: 100%;
 		cursor: pointer;
 
 		&:hover {
@@ -207,6 +212,10 @@ export const CheckBoxToCreate = styled.input.attrs({
 	appearance: none;
 	${({ priority }) => {
 		switch (priority) {
+			case 0:
+				return `
+				border: 2.5px solid #0CB8B3
+				`
 			case 1:
 				return 'border: 2.5px solid #972626'
 			case 2:
@@ -237,5 +246,68 @@ export const CheckBoxToCreate = styled.input.attrs({
 		background-image: url('/Checked.svg');
 		background-repeat: no-repeat;
 		background-position: center;
+	}
+`
+
+export const Filter = styled.div`
+	width: 100%;
+	position: relative;
+`
+
+export const TitleFilter = styled.div`
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+
+	svg {
+		cursor: pointer;
+	}
+`
+
+export const FilterModal = styled.div`
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	background-color: #21212b;
+	border-radius: 14px;
+	height: max-content;
+	width: 100%;
+	max-width: 163px;
+	z-index: 999;
+
+	position: absolute;
+	right: 38px;
+	top: 0px;
+
+	h2 {
+		font-family: 'Poppins';
+		font-style: normal;
+		font-weight: 600;
+		font-size: 14px;
+		padding: 20px 0 0 20px;
+	}
+
+	select {
+		margin: 20px 0 20px 20px;
+		padding: 5px 50px 5px 10px;
+		background: #d9d9d9;
+		border-radius: 5px;
+		font-size: 12px;
+		font-weight: 600;
+	}
+
+	.filter_options {
+		margin: 20px 0 0 20px;
+		gap: 20px;
+		display: flex;
+		flex-direction: column;
+
+		span {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			color: #adadad;
+			font-family: 'Poppins';
+			font-weight: 600;
+			font-size: 14px;
+		}
 	}
 `
