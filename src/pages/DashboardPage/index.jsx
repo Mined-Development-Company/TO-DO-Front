@@ -291,7 +291,7 @@ export const DashboardPage = () => {
 						) : (
 							''
 						)}
-						{page === totalPages ? (
+						{userTasks[0] === 0 || page === totalPages ? (
 							''
 						) : (
 							<button
