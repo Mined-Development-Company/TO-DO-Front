@@ -126,14 +126,14 @@ export const DashboardPage = () => {
 					<HeaderButtons>
 						<SwitchDarkMode />
 
-						<img onClick={HandleLogout} src='/Logout.svg' alt='Deslogar' />
+						<img onClick={HandleLogout} src='/Logout.svg' alt='Deslogar' title='Deslogar' />
 					</HeaderButtons>
 				</Header>
 
 				<ContainerContent>
 					<ContainerCenter>
 						<Title>ToDo</Title>
-						<AddTask opened={openNewTask} onClick={() => setOpenNewTask((prevState) => !prevState)}>
+						<AddTask opened={openNewTask} onClick={() => setOpenNewTask((prevState) => !prevState)} tabIndex='0'>
 							<div className='plus-button'>
 								<AiOutlinePlus size={24} color={isDarkMode ? '#000000' : '#FFFFFF'} />
 							</div>
@@ -182,7 +182,7 @@ export const DashboardPage = () => {
 										ADICIONAR TAREFA
 									</button>
 								</div>
-								<div className='close-modal' onClick={() => setOpenNewTask((prevState) => !prevState)}>
+								<div className='close-modal' onClick={() => setOpenNewTask((prevState) => !prevState)} title='Cancelar'>
 									<AiFillCloseCircle size={24} color={'#194FD9'} />
 								</div>
 							</AddTaskModal>

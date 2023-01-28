@@ -7,7 +7,7 @@ export const SwitchDarkMode = () => {
 
     return (
         <ContainerSwitch>
-            <label className="switch">
+            <label className="switch" title='Alternar tema claro/escuro'>
                 <input type="checkbox" checked={!isDarkMode} onChange={e => setIsDarkMode(prevState => !prevState)} />
                 <span className="slider"></span>
             </label>
