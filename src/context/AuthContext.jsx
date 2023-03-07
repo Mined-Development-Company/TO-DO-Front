@@ -42,20 +42,17 @@ export const AuthProvider = (props) => {
 
 			queryClient.invalidateQueries('user')
 		},
-		onError: (error) => {
-			// console.log(error)
-		}
+		onError: (error) => console.log("/signIn -> Error: ", error)
+		
 	})
 
 	const { mutateAsync: signUp } = useMutation((user) => API.post('/register', user), {
-		onSuccess: (data) => {
+		onSuccess: () => {
 			localStorage.removeItem('token')
 
 			queryClient.invalidateQueries('user')
 		},
-		onError: (error) => {
-			// console.log(error)
-		}
+		onError: (error) => console.log("/signUp -> Error: ", error)
 	})
 
 	const { mutateAsync: getTasks } = useMutation(() => API.get(`/tasks?page=${page}&qty=${qtyPage}`), {
@@ -65,9 +62,7 @@ export const AuthProvider = (props) => {
 
 			queryClient.invalidateQueries('user')
 		},
-		onError: (error) => {
-			// console.log(error)
-		}
+		onError: (error) => console.log("/getTask  -> Error: ", error)
 	})
 
 	const { mutateAsync: createTask } = useMutation((task) => API.post('/tasks', task), {
@@ -75,9 +70,7 @@ export const AuthProvider = (props) => {
 			getTasks()
 			queryClient.invalidateQueries('user')
 		},
-		onError: (error) => {
-			// console.log(error)
-		}
+		onError: (error) =>  console.log("/createTask -> Error: ", error)
 	})
 
 	const { mutateAsync: deleteTask } = useMutation((taskId) => API.delete(`/tasks/${taskId}`), {
@@ -85,9 +78,7 @@ export const AuthProvider = (props) => {
 			getTasks()
 			queryClient.invalidateQueries('user')
 		},
-		onError: (error) => {
-			// console.log(error)
-		}
+		onError: (error) => console.log("/deleteTask -> Error: ", error)
 	})
 
 	const { mutateAsync: updateTask } = useMutation((taskId) => API.put(`/tasks/${taskId}`), {
@@ -95,9 +86,7 @@ export const AuthProvider = (props) => {
 			getTasks()
 			queryClient.invalidateQueries('user')
 		},
-		onError: (error) => {
-			// console.log(error)
-		}
+    onError: (error) => console.log("/updateTask -> Error: ", error)
 	})
 
 	const logout = () => {
